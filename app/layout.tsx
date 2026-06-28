@@ -1,22 +1,64 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+export const metadata: Metadata = {
+  metadataBase: new URL("https://kidventor.edu.ng"),
 
-export const metadata = {
-  title: "KidVentor",
+  title: {
+    default: "KidVentor | Learn Digital Skills Through Adventure",
+    template: "%s | KidVentor",
+  },
+
   description:
-    "Africa's Digital Technology and Coding Learning Platform",
+    "Africa's leading digital technology and coding learning platform for children, teenagers, parents, schools, and beginners.",
+
+  applicationName: "KidVentor",
+
+  authors: [
+    {
+      name: "KidVentor Team",
+    },
+  ],
+
+  creator: "KidVentor",
+
+  publisher: "KidVentor",
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  openGraph: {
+    title: "KidVentor",
+    description: "Africa's Digital Technology Learning Platform",
+    url: "https://kidventor.edu.ng",
+    siteName: "KidVentor",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "KidVentor",
+    description: "Africa's Digital Technology Learning Platform",
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
+
+export const viewport: Viewport = {
+  themeColor: "#050816",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,9 +67,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full scroll-smooth antialiased"
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body
+        className={`${poppins.className} min-h-screen bg-[#050816] text-white`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
