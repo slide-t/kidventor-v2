@@ -1,21 +1,40 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type LessonSection = {
   id: string;
   heading: string;
   body: string;
+ 
   tip: string;
+  image?: string;
+  activity?: string;
 };
 
 type LessonContentProps = {
   content: LessonSection[];
+
+  currentSection: number;
+
+  setCurrentSection: React.Dispatch<
+    React.SetStateAction<number>
+  >;
 };
 
 export default function LessonContent({
   content,
+  currentSection,
+  setCurrentSection,
 }: LessonContentProps) {
+
+ 
+
+const current = content[currentSection];
+
+const isFirst = currentSection === 0;
+const isLast = currentSection === content.length - 1;
   return (
     <section className="mt-12">
 
@@ -31,46 +50,142 @@ export default function LessonContent({
       </div>
 
       {/* Lesson Sections */}
-      <div className="space-y-8">
+      <AnimatePresence mode="wait">
 
-        {content.map((section, index) => (
+  <motion.div
+    key={current.id}
+    initial={{
+      opacity: 0,
+      x: 40,
+    }}
+    animate={{
+      opacity: 1,
+      x: 0,
+    }}
+    exit={{
+      opacity: 0,
+      x: -40,
+    }}
+    transition={{
+      duration: 0.35,
+    }}
+    className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl"
+  >
 
-          <motion.div
-            key={section.id}
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.4,
-              delay: index * 0.1,
-            }}
-            className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl"
-          >
+    {/* Progress */}
 
-            <h3 className="text-2xl font-black text-cyan-400">
-              {section.heading}
-            </h3>
+    <div className="mb-6 flex items-center justify-between">
 
-            <p className="mt-5 leading-8 text-lg text-gray-300">
-              {section.body}
-            </p>
+      <span className="rounded-full bg-cyan-500/10 px-4 py-2 text-sm text-cyan-300">
 
-            <div className="mt-6 rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-5">
+        Step {currentSection + 1} of {content.length}
 
-              <h4 className="font-bold text-cyan-400">
-                💡 Remember
-              </h4>
+      </span>
 
-              <p className="mt-2 text-gray-300">
-                {section.tip}
-              </p>
+    </div>
 
-            </div>
+    {/* Title */}
 
-          </motion.div>
+    <h3 className="text-3xl font-black text-cyan-400">
 
-        ))}
+      {current.heading}
+
+    </h3>
+
+    {/* Body */}
+
+    <p className="mt-6 text-lg leading-8 text-gray-300">
+
+      {current.body}
+
+    </p>
+    {/* Lesson Image */}
+
+{current.image && (
+
+  <div className="mt-8 overflow-hidden rounded-3xl border border-white/10">
+
+    <img
+      src={current.image}
+      alt={current.heading}
+      className="h-auto w-full object-cover transition duration-500 hover:scale-105"
+    />
+
+  </div>
+
+)}
+
+    {/* Tip */}
+
+    <div className="mt-8 rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-6">
+
+      <h4 className="font-black text-cyan-300">
+
+        💡 Remember
+
+      </h4>
+
+      <p className="mt-3 text-gray-300">
+
+        {current.tip}
+
+      </p>
+
+    </div>
+
+    {/* Activity */}
+
+    {current.activity && (
+
+      <div className="mt-8 rounded-2xl border border-yellow-500/20 bg-yellow-500/10 p-6">
+
+        <h4 className="font-black text-yellow-400">
+
+          🎯 Mini Activity
+
+        </h4>
+
+        <p className="mt-3 text-gray-300">
+
+          {current.activity}
+
+        </p>
 
       </div>
+
+    )}
+
+    {/* Navigation */}
+
+    <div className="mt-10 flex justify-between">
+
+      <button
+        disabled={isFirst}
+        onClick={() =>
+          setCurrentSection((prev) => prev - 1)
+        }
+        className="rounded-xl border border-white/10 px-6 py-3 font-bold disabled:cursor-not-allowed disabled:opacity-40 hover:bg-white/10"
+      >
+        ← Previous
+      </button>
+
+      <button
+        disabled={isLast}
+        onClick={() =>
+          setCurrentSection((prev) => prev + 1)
+        }
+        className="rounded-xl bg-cyan-500 px-6 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-40 hover:bg-cyan-400"
+      >
+        Next →
+      </button>
+
+    </div>
+
+  </motion.div>
+
+</AnimatePresence>
+
+        
 
     </section>
   );

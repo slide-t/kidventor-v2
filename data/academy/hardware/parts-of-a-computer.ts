@@ -16,6 +16,7 @@ export const partsOfComputerLesson = {
   ],
 
   content: [
+
     {
       id: "computer",
 
@@ -26,6 +27,11 @@ export const partsOfComputerLesson = {
 
       tip:
         "Think of a computer as a very smart helper that follows instructions.",
+
+      image: "/images/hardware/computer.webp",
+
+      activity:
+        "Ask your teacher to show you a real computer.",
     },
 
     {
@@ -38,6 +44,11 @@ export const partsOfComputerLesson = {
 
       tip:
         "It is like the television screen of a computer.",
+
+      image: "/images/hardware/monitor.webp",
+
+      activity:
+        "Look around your classroom or home and point to a computer monitor.",
     },
 
     {
@@ -50,6 +61,11 @@ export const partsOfComputerLesson = {
 
       tip:
         "Without a keyboard you cannot easily type your name.",
+
+      image: "/images/hardware/keyboard.webp",
+
+      activity:
+        "Find the letter A on a keyboard.",
     },
 
     {
@@ -62,6 +78,32 @@ export const partsOfComputerLesson = {
 
       tip:
         "Move the mouse on the table and watch the pointer move.",
+
+      image: "/images/hardware/mouse.webp",
+
+      activity:
+        "Practice moving a mouse without clicking.",
     },
+
   ],
+
+challenge: {
+  id: "challenge-001",
+
+  title: "Try It Yourself",
+
+  instruction:
+    "Look around you. Can you point to a monitor, keyboard and mouse on a real computer? If you don't have a computer, look at a picture and identify them.",
+
+  type: "observation",
+
+  rewardXP: 50,
+
+  rewardBadge: "Hardware Explorer",
+
+  buttonText: "I Have Completed This Challenge",
+
+  completed: false,
+},
+
 };

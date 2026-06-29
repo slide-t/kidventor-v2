@@ -1,14 +1,42 @@
 "use client";
 
+import { useState } from "react";
+
 import LessonHeader from "./LessonHeader";
 import LessonObjectives from "./LessonObjectives";
 import LessonContent from "./LessonContent";
+import LessonChallenge from "./LessonChallenge";
+import LessonSummary from "./LessonSummary";
+import LessonNavigation from "./LessonNavigation";
+import LessonProgress from "./LessonProgress";
+
 type Lesson = {
   emoji: string;
   title: string;
   difficulty: string;
   duration: string;
+
   objectives: string[];
+
+  content: {
+    id: string;
+    heading: string;
+    body: string;
+    tip: string;
+    image?: string;
+    activity?: string;
+  }[];
+
+  challenge: {
+    id: string;
+    title: string;
+    instruction: string;
+    type: string;
+    rewardXP: number;
+    rewardBadge: string;
+    buttonText: string;
+    completed: boolean;
+  };
 };
 
 type LessonViewerProps = {
@@ -18,8 +46,14 @@ type LessonViewerProps = {
 export default function LessonViewer({
   lesson,
 }: LessonViewerProps) {
+  const [currentSection, setCurrentSection] = useState(0);
   return (
     <div className="mx-auto max-w-7xl px-6 py-12">
+
+      <LessonProgress
+  current={currentSection + 1}
+  total={lesson.content.length}
+/>
 
       <LessonHeader
         emoji={lesson.emoji}
@@ -30,6 +64,31 @@ export default function LessonViewer({
 
       <LessonObjectives
         objectives={lesson.objectives}
+      />
+
+      <LessonContent
+  content={lesson.content}
+  currentSection={currentSection}
+  setCurrentSection={setCurrentSection}
+/>
+
+      <LessonChallenge
+        title={lesson.challenge.title}
+        instruction={lesson.challenge.instruction}
+        type={lesson.challenge.type}
+        rewardXP={lesson.challenge.rewardXP}
+        rewardBadge={lesson.challenge.rewardBadge}
+        buttonText={lesson.challenge.buttonText}
+        completed={lesson.challenge.completed}
+      />
+
+      <LessonSummary
+        title={lesson.title}
+      />
+
+      <LessonNavigation
+        previous=""
+        next="Computer Hardware"
       />
 
     </div>
