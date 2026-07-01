@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { isLessonCompleted } from "@/lib/lessonProgress";
 import { completeLessonPipeline } from "@/lib/completeLessonPipeline";
+import { useStudent } from "@/context/StudentContext";
 type LessonChallengeProps = {
   lessonId: string;
   title: string;
@@ -26,6 +27,7 @@ export default function LessonChallenge({
 }: LessonChallengeProps) {
 
   const [isCompleted, setIsCompleted] = useState(false);
+  const student = useStudent();
   useEffect(() => {
   setIsCompleted(
     completed || isLessonCompleted(lessonId)
@@ -86,13 +88,15 @@ onClick={() => {
     rewardXP,
   });
 
-  if (result.completed) {
-    setIsCompleted(true);
-  }
+ if (result.completed) {
+  setIsCompleted(true);
+}
 
-  if (result.xpAwarded) {
-    console.log(`⭐ Total XP: ${result.totalXP}`);
-  }
+if (result.xpAwarded) {
+  student.refreshStudent();
+
+  console.log(`⭐ Total XP: ${result.totalXP}`);
+}
 }}
   disabled={isCompleted}
   className={`rounded-2xl px-8 py-4 font-black transition active:scale-95 ${

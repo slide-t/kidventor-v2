@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { StudentProvider } from "@/context/StudentContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -70,10 +71,12 @@ export default function RootLayout({
       className="h-full scroll-smooth antialiased"
     >
       <body
-        className={`${poppins.className} min-h-screen bg-[#050816] text-white`}
-      >
-        {children}
-      </body>
+  className={`${poppins.className} min-h-screen bg-[#050816] text-white`}
+>
+  <StudentProvider>
+    {children}
+  </StudentProvider>
+</body>
     </html>
   );
 }

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { getXP, getLevel } from "@/lib/xp";
+import { useStudent } from "@/context/StudentContext";
 
 type StudentProfileProps = {
   name?: string;
@@ -13,10 +14,11 @@ type StudentProfileProps = {
 
 export default function StudentProfile({
   name = "Future Explorer",
-  level = 1,
-  xp = 0,
   streak = 1,
 }: StudentProfileProps) {
+
+  const student = useStudent();
+
   const [currentXP, setCurrentXP] = useState(xp);
 const [currentLevel, setCurrentLevel] = useState(level);
 
@@ -60,7 +62,7 @@ useEffect(() => {
 
               <p className="mt-2 font-semibold text-cyan-400">
 
-                Level {currentLevel} Explorer
+                Level {student.level} Explorer
 
               </p>
 
@@ -74,7 +76,7 @@ useEffect(() => {
 
               <p className="text-3xl font-black text-yellow-400">
 
-              ⭐ {currentXP}
+              ⭐ {student.xp}
 
               </p>
 
